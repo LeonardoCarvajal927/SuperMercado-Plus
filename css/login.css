@@ -1,0 +1,128 @@
+
+/* Diseño general de la página */
+
+body {
+    background-color: #f2f3f7;
+    font-family: Arial, sans-serif;
+    margin: 0;
+}
+
+/* Formuñasrio login */
+
+.contenedor-login {
+    width: 800px;
+    margin: 100px auto;
+    background-color: white;
+    display: flex;
+    border: 1px solid #dddddd;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+/* Formulario izquerda */
+
+.presentacion {
+    width: 40%;
+    background-color: #ffd3e2;
+    padding: 50px 30px;
+}
+
+.presentacion h1 {
+    color: #e91e63;
+    font-size: 32px;
+}
+
+.presentacion p {
+    color: #333333;
+    font-size: 18px;
+    line-height: 30px;
+}
+
+/* Formulario derecha */
+
+.formulario-login {
+    width: 60%;
+    padding: 50px;
+}
+
+.formulario-login h2 {
+    color: #222222;
+    font-size: 28px;
+    margin-bottom: 30px;
+}
+
+/* Campos del formulario */
+
+.formulario-login label {
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.formulario-login input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.formulario-login select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+/* Botón de ingreso */
+
+.formulario-login button {
+    width: 100%;
+    padding: 14px;
+    margin-top: 25px;
+    background-color: #240d14;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* Cuando el mouse pasa sobre el botón */
+
+.formulario-login button:hover {
+    background-color: #c2185b;
+}
+
+/* Mensajes de error */
+
+#mensaje-error {
+    color: red;
+    font-size: 14px;
+    margin-top: 15px;
+}
+
+/* Diseño para celulares */
+
+@media (max-width: 850px) {
+
+    .contenedor-login {
+        width: 90%;
+        margin: 40px auto;
+        display: block;
+    }
+
+    .presentacion {
+        width: auto;
+        padding: 25px;
+        text-align: center;
+    }
+
+    .formulario-login {
+        width: auto;
+        padding: 25px;
+    }
+
+}

@@ -1,0 +1,195 @@
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Editar producto - SuperMercado Plus</title>
+
+    <link rel="stylesheet" href="../css/formularios.css">
+    <link rel="stylesheet" href="../css/editar.css">
+</head>
+
+<body>
+
+    <div class="panel-principal">
+
+        <!-- MENU LATERAL -->
+
+        <div class="menu-lateral">
+
+            <h2>SuperMercado <span>PLUS</span></h2>
+
+            <a href="inicio.html">Inicio</a>
+            <a href="inventario.html" class="activo">Inventario</a>
+            <a href="ventas.html" target="_blank">Ventas</a>
+            <a href="facturacion.html" target="_blank">Facturación</a>
+            <a href="reportes.html" target="_blank">Reportes</a>
+
+            <a href="login.html" class="cerrar-sesion">Cerrar sesión</a>
+
+        </div>
+
+        <!-- CONTENIDO PRINCIPAL -->
+
+        <div class="contenido-principal">
+
+            <div class="encabezado">
+
+                <p>SuperMercado Plus / Inventario</p>
+
+                <p class="usuario">Usuario: Admin</p>
+
+            </div>
+
+            <h1>Editar producto</h1>
+
+            <p>Modificar los datos registrados.</p>
+
+            <!-- FORMULARIO -->
+
+            <form id="formulario-editar" novalidate>
+
+                <div class="campos">
+
+                    <!-- NOMBRE -->
+
+                    <div class="campo">
+
+                        <label for="nombre">Nombre del producto *</label>
+
+                        <input type="text" id="nombre" value="Arroz 1 kg">
+
+                        <p class="error" id="error-nombre"></p>
+
+                    </div>
+
+                    <!-- CODIGO -->
+
+                    <div class="campo">
+
+                        <label for="codigo">Código *</label>
+
+                        <input type="text" id="codigo" value="P001">
+
+                        <p class="error" id="error-codigo"></p>
+
+                    </div>
+
+                    <!-- CATEGORIA -->
+
+                    <div class="campo">
+
+                        <label for="categoria">Categoría *</label>
+
+                        <select id="categoria">
+
+                            <option value="">Seleccionar categoría</option>
+                            <option value="Granos" selected>Granos</option>
+                            <option value="Lacteos">Lácteos</option>
+                            <option value="Abarrotes">Abarrotes</option>
+                            <option value="Panaderia">Panadería</option>
+                            <option value="Aseo">Aseo</option>
+                            <option value="Bebidas">Bebidas</option>
+
+                        </select>
+
+                        <p class="error" id="error-categoria"></p>
+
+                    </div>
+
+                    <!-- PRECIO -->
+
+                    <div class="campo">
+
+                        <label for="precio">Precio de venta *</label>
+
+                        <input type="number" id="precio" value="4500">
+
+                        <p class="error" id="error-precio"></p>
+
+                    </div>
+
+                    <!-- CANTIDAD -->
+
+                    <div class="campo">
+
+                        <label for="cantidad">Cantidad disponible *</label>
+
+                        <input type="number" id="cantidad" value="25">
+
+                        <p class="error" id="error-cantidad"></p>
+
+                    </div>
+
+                    <!-- FECHA -->
+
+                    <div class="campo">
+
+                        <label for="fecha">Fecha de vencimiento</label>
+
+                        <input type="date" id="fecha" value="2026-11-18">
+
+                        <p class="error" id="error-fecha"></p>
+
+                    </div>
+
+                    <!-- PROVEEDOR -->
+
+                    <div class="campo">
+
+                        <label for="proveedor">Proveedor *</label>
+
+                        <select id="proveedor">
+
+                            <option value="">Seleccionar proveedor</option>
+
+                            <option value="Distribuidora Central" selected>
+                                Distribuidora Central
+                            </option>
+
+                            <option value="Distribuidora Norte">
+                                Distribuidora Norte
+                            </option>
+
+                            <option value="Proveedor Local">
+                                Proveedor Local
+                            </option>
+
+                        </select>
+
+                        <p class="error" id="error-proveedor"></p>
+
+                    </div>
+
+                </div>
+
+                <!-- BOTONES -->
+
+                <div class="botones">
+
+                    <a href="inventario.html" class="boton-cancelar">
+                        Cancelar
+                    </a>
+
+                    <button type="submit" class="boton-actualizar">
+                        Actualizar producto
+                    </button>
+
+                </div>
+
+                <p id="mensaje-exito"></p>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <script src="../js/editar.js"></script>
+
+</body>
+
+</html>

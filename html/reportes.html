@@ -1,0 +1,233 @@
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Reportes - SuperMercado Plus</title>
+
+    <link rel="stylesheet" href="../css/reportes.css">
+</head>
+
+<body>
+
+    <div class="panel-principal">
+
+        <!-- MENU LATERAL -->
+
+        <div class="menu-lateral">
+
+            <h2>SuperMercado <span>PLUS</span></h2>
+
+            <a href="inicio.html">Inicio</a>
+            <a href="inventario.html" target="_blank">Inventario</a>
+            <a href="ventas.html" target="_blank">Ventas</a>
+            <a href="facturacion.html" target="_blank">Facturación</a>
+            <a href="reportes.html" class="activo">Reportes</a>
+
+            <a href="login.html" class="cerrar-sesion">Cerrar sesión</a>
+
+        </div>
+
+        <!-- CONTENIDO PRINCIPAL -->
+
+        <div class="contenido-principal">
+
+            <div class="encabezado">
+
+                <p>SuperMercado Plus / Reportes</p>
+
+                <p class="usuario">Usuario: Admin</p>
+
+            </div>
+
+            <h1>Reportes del supermercado</h1>
+
+            <p>Resumen de ventas, productos e inventario.</p>
+
+            <!-- TARJETAS DE INFORMACION -->
+
+            <div class="tarjetas">
+
+                <div class="tarjeta tarjeta-ventas">
+                    <h3>VENTAS DEL DIA</h3>
+                    <h2>$ 850.000</h2>
+                </div>
+
+                <div class="tarjeta tarjeta-facturas">
+                    <h3>FACTURAS</h3>
+                    <h2>18</h2>
+                </div>
+
+                <div class="tarjeta tarjeta-productos">
+                    <h3>PRODUCTOS VENDIDOS</h3>
+                    <h2>73</h2>
+                </div>
+
+            </div>
+
+            <!-- GRAFICO DE VENTAS -->
+
+            <div class="cuadro-reporte">
+
+                <h2>Ventas de la semana</h2>
+
+                <p>Representación de las ventas de lunes a domingo.</p>
+
+                <div class="grafico">
+
+                    <div class="dia">
+                        <div class="barra" style="height: 55px;"></div>
+                        <p>Lun</p>
+                    </div>
+
+                    <div class="dia">
+                        <div class="barra" style="height: 90px;"></div>
+                        <p>Mar</p>
+                    </div>
+
+                    <div class="dia">
+                        <div class="barra" style="height: 70px;"></div>
+                        <p>Mié</p>
+                    </div>
+
+                    <div class="dia">
+                        <div class="barra" style="height: 110px;"></div>
+                        <p>Jue</p>
+                    </div>
+
+                    <div class="dia">
+                        <div class="barra" style="height: 85px;"></div>
+                        <p>Vie</p>
+                    </div>
+
+                    <div class="dia">
+                        <div class="barra" style="height: 140px;"></div>
+                        <p>Sáb</p>
+                    </div>
+
+                    <div class="dia">
+                        <div class="barra" style="height: 115px;"></div>
+                        <p>Dom</p>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- TABLAS DE REPORTES -->
+
+            <div class="tablas-reportes">
+
+                <!-- PRODUCTOS MAS VENDIDOS -->
+
+                <div class="cuadro-reporte">
+
+                    <h2>Productos más vendidos</h2>
+
+                    <div class="contenedor-tabla">
+
+                        <table>
+
+                            <thead>
+                                <tr>
+                                    <th>Producto</th>
+                                    <th>Unidades vendidas</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                                <tr>
+                                    <td>Arroz 1 kg</td>
+                                    <td>42</td>
+                                </tr>
+
+                                <tr>
+                                    <td>Leche 1 L</td>
+                                    <td>35</td>
+                                </tr>
+
+                                <tr>
+                                    <td>Aceite 1 L</td>
+                                    <td>27</td>
+                                </tr>
+
+                                <tr>
+                                    <td>Pan tajado</td>
+                                    <td>20</td>
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+                <!-- PRODUCTOS CON POCO STOCK -->
+
+                <div class="cuadro-reporte">
+
+                    <h2>Productos con poco stock</h2>
+
+                    <div class="contenedor-tabla">
+
+                        <table>
+
+                            <thead>
+                                <tr>
+                                    <th>Producto</th>
+                                    <th>Stock disponible</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                                <tr>
+                                    <td>Azúcar 1 kg</td>
+                                    <td>2</td>
+                                </tr>
+
+                                <tr>
+                                    <td>Aceite 1 L</td>
+                                    <td>3</td>
+                                </tr>
+
+                                <tr>
+                                    <td>Arroz 1 kg</td>
+                                    <td>4</td>
+                                </tr>
+
+                                <tr>
+                                    <td>Leche 1 L</td>
+                                    <td>5</td>
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <p class="nota">
+                Nota: los datos presentados son ejemplos para
+                el proyecto académico.
+            </p>
+
+        </div>
+
+    </div>
+
+    <script src="../js/reportes.js"></script>
+
+</body>
+
+</html>

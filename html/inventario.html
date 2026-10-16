@@ -1,0 +1,189 @@
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventario - SuperMercado Plus</title>
+    <link rel="stylesheet" href="../css/inventario.css">
+</head>
+
+<body>
+
+    <div class="panel-principal">
+
+        <!-- MENU LATERAL -->
+
+        <div class="menu-lateral">
+
+            <h2>SuperMercado <span>PLUS</span></h2>
+
+            <a href="inicio.html">Inicio</a>
+            <a href="inventario.html" class="activo">Inventario</a>
+            <a href="ventas.html" target="_blank">Ventas</a>
+            <a href="facturacion.html" target="_blank">Facturación</a>
+            <a href="reportes.html" target="_blank">Reportes</a>
+
+            <a href="login.html" class="cerrar-sesion">Cerrar sesión</a>
+
+        </div>
+
+        <!-- CONTENIDO DEL INVENTARIO -->
+
+        <div class="contenido-principal">
+
+            <div class="encabezado">
+                <p>SuperMercado Plus / Inventario</p>
+                <p class="usuario">Usuario: Admin</p>
+            </div>
+
+            <h1>Inventario - Lista de productos</h1>
+
+            <p>Consultar, buscar, registrar, editar o eliminar productos.</p>
+
+            <!-- BUSCADOR Y BOTON -->
+
+            <div class="opciones-inventario">
+
+                <div class="buscador">
+
+                    <label for="buscar">Buscar productos</label>
+
+                    <input type="text" id="buscar"
+                    placeholder="Escribe el nombre o codigo...">
+
+                </div>
+
+                <a href="registrar.html" class="boton-nuevo">
+                    + Nuevo producto
+                </a>
+
+            </div>
+
+            <!-- TABLA DE PRODUCTOS -->
+
+            <div class="contenedor-tabla">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>Codigo</th>
+                            <th>Producto</th>
+                            <th>Categoria</th>
+                            <th>Precio</th>
+                            <th>Stock</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        <tr>
+                            <td>P001</td>
+                            <td>Arroz 1 kg</td>
+                            <td>Granos</td>
+                            <td>$ 4.500</td>
+                            <td>25</td>
+                            <td>
+                                <a href="editar.html" class="boton-editar">Editar</a>
+                                <button class="boton-eliminar">Eliminar</button>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>P002</td>
+                            <td>Leche 1 L</td>
+                            <td>Lacteos</td>
+                            <td>$ 5.200</td>
+                            <td>30</td>
+                            <td>
+                                <a href="editar.html" class="boton-editar">Editar</a>
+                                <button class="boton-eliminar">Eliminar</button>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>P003</td>
+                            <td>Aceite 1 L</td>
+                            <td>Abarrotes</td>
+                            <td>$ 9.000</td>
+                            <td>13</td>
+                            <td>
+                                <a href="editar.html" class="boton-editar">Editar</a>
+                                <button class="boton-eliminar">Eliminar</button>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>P004</td>
+                            <td>Azucar 1 kg</td>
+                            <td>Granos</td>
+                            <td>$ 4.200</td>
+                            <td>18</td>
+                            <td>
+                                <a href="editar.html" class="boton-editar">Editar</a>
+                                <button class="boton-eliminar">Eliminar</button>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>P005</td>
+                            <td>Pan tajado</td>
+                            <td>Panaderia</td>
+                            <td>$ 7.500</td>
+                            <td>12</td>
+                            <td>
+                                <a href="editar.html" class="boton-editar">Editar</a>
+                                <button class="boton-eliminar">Eliminar</button>
+                            </td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    
+
+
+<div id="ventana-eliminar" class="fondo-ventana">
+
+    <div class="cuadro-eliminar">
+
+        <h2>¿Eliminar producto?</h2>
+
+        <p id="texto-eliminar">
+            ¿Estás seguro de eliminar este producto?
+        </p>
+
+        <p>Esta acción no se puede deshacer.</p>
+
+        <div class="botones-confirmacion">
+
+            <button type="button" id="cancelar-eliminar">
+                Cancelar
+            </button>
+
+            <button type="button" id="confirmar-eliminar">
+                Sí, eliminar
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+    <script src="../js/inventario.js"></script>
+
+</body>
+
+</html>

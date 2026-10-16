@@ -1,0 +1,218 @@
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Facturación - SuperMercado Plus</title>
+
+    <link rel="stylesheet" href="../css/facturacion.css">
+</head>
+
+<body>
+
+    <div class="panel-principal">
+
+        <!-- MENU LATERAL -->
+
+        <div class="menu-lateral">
+
+            <h2>SuperMercado <span>PLUS</span></h2>
+
+            <a href="inicio.html">Inicio</a>
+            <a href="inventario.html" target="_blank">Inventario</a>
+            <a href="ventas.html" target="_blank">Ventas</a>
+            <a href="facturacion.html" class="activo">Facturación</a>
+            <a href="reportes.html" target="_blank">Reportes</a>
+
+            <a href="login.html" class="cerrar-sesion">Cerrar sesión</a>
+
+        </div>
+
+        <!-- CONTENIDO PRINCIPAL -->
+
+        <div class="contenido-principal">
+
+            <div class="encabezado">
+
+                <p>SuperMercado Plus / Facturación</p>
+
+                <p class="usuario">Usuario: Admin</p>
+
+            </div>
+
+            <h1>Facturación</h1>
+
+            <p>Consultar el historial y detalle de las facturas.</p>
+
+            <!-- BUSCADOR -->
+
+            <div class="buscador">
+
+                <label for="buscar">Buscar factura</label>
+
+                <div class="busqueda">
+
+                    <input type="text" id="buscar"
+                    placeholder="Escribe el número de factura...">
+
+                    <button id="boton-buscar">Buscar</button>
+
+                </div>
+
+            </div>
+
+            <!-- TABLA DE FACTURAS -->
+
+            <div class="contenedor-tabla">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+                            <th>Número</th>
+                            <th>Fecha</th>
+                            <th>Cliente</th>
+                            <th>Total</th>
+                            <th>Acciones</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        <tr>
+                            <td>F001</td>
+                            <td>15/10/2026</td>
+                            <td>Carlos Pérez</td>
+                            <td>$ 45.500</td>
+                            <td>
+                                <button class="boton-detalle"
+                                data-factura="F001">
+                                    Ver detalle
+                                </button>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>F002</td>
+                            <td>15/10/2026</td>
+                            <td>María López</td>
+                            <td>$ 78.200</td>
+                            <td>
+                                <button class="boton-detalle"
+                                data-factura="F002">
+                                    Ver detalle
+                                </button>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>F003</td>
+                            <td>14/10/2026</td>
+                            <td>Juan Gómez</td>
+                            <td>$ 32.000</td>
+                            <td>
+                                <button class="boton-detalle"
+                                data-factura="F003">
+                                    Ver detalle
+                                </button>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>F004</td>
+                            <td>14/10/2026</td>
+                            <td>Ana Rodríguez</td>
+                            <td>$ 56.000</td>
+                            <td>
+                                <button class="boton-detalle"
+                                data-factura="F004">
+                                    Ver detalle
+                                </button>
+                            </td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            <!-- DETALLE DE FACTURA -->
+
+            <div class="detalle-factura" id="detalle-factura">
+
+                <h2>Detalle de factura</h2>
+
+                <p id="numero-factura">Factura: F001</p>
+
+                <p id="cliente-factura">Cliente: Carlos Pérez</p>
+
+                <p id="fecha-factura">Fecha: 15/10/2026</p>
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>Producto</th>
+                            <th>Cantidad</th>
+                            <th>Precio</th>
+                            <th>Subtotal</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="productos-factura">
+
+                        <tr>
+                            <td>Arroz 1 kg</td>
+                            <td>3</td>
+                            <td>$ 4.500</td>
+                            <td>$ 13.500</td>
+                        </tr>
+
+                        <tr>
+                            <td>Aceite 1 L</td>
+                            <td>2</td>
+                            <td>$ 9.000</td>
+                            <td>$ 18.000</td>
+                        </tr>
+
+                        <tr>
+                            <td>Azúcar 1 kg</td>
+                            <td>2</td>
+                            <td>$ 4.200</td>
+                            <td>$ 8.400</td>
+                        </tr>
+
+                        <tr>
+                            <td>Pan tajado</td>
+                            <td>1</td>
+                            <td>$ 5.600</td>
+                            <td>$ 5.600</td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+                <h3 id="total-factura">Total: $ 45.500</h3>
+
+                <button id="cerrar-detalle">
+                    Cerrar detalle
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="../js/facturacion.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,51 @@
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SuperMercado Plus - Login</title>
+    <link rel="stylesheet" href="../css/login.css">
+</head>
+
+<body>
+
+    <div class="contenedor-login">
+
+        <div class="presentacion">
+            <h1>SuperMercado Plus</h1>
+            <p>Sistema de gestión de inventario y ventas</p>
+        </div>
+
+        <div class="formulario-login">
+            <h2>Iniciar sesión</h2>
+
+            <form id="loginForm">
+
+                <label for="correo">Usuario o correo</label>
+                <input type="email" id="correo" placeholder="Ingresa tu correo">
+
+                <label for="contrasena">Contraseña</label>
+                <input type="password" id="contrasena" placeholder="Ingresa tu contraseña">
+
+                <label for="rol">Rol</label>
+                <select id="rol">
+                    <option value="">Seleccionar rol</option>
+                    <option value="admin">Administrador</option>
+                    <option value="empleado">Empleado</option>
+                </select>
+
+                <p id="mensaje-error"></p>
+
+                <button type="submit">Ingresar al sistema</button>
+
+            </form>
+        </div>
+
+    </div>
+
+    <script src="../js/login.js"></script>
+
+</body>
+</html>

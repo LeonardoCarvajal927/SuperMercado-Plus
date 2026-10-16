@@ -1,0 +1,276 @@
+
+/* DISEÑO GENERAL */
+
+body {
+    margin: 0;
+    background-color: #f2f3f7;
+    font-family: Arial, sans-serif;
+}
+
+/* CONTENEDOR PRINCIPAL */
+
+.panel-principal {
+    display: flex;
+    min-height: 100vh;
+    max-width: 1400px;
+    margin: auto;
+    background-color: white;
+}
+
+/* MENÚ LATERAL */
+
+.menu-lateral {
+    width: 200px;
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-right: 1px solid #dddddd;
+}
+
+.menu-lateral h2 {
+    font-size: 22px;
+    color: #222222;
+    margin-bottom: 40px;
+}
+
+.menu-lateral span {
+    color: #e91e63;
+}
+
+.menu-lateral a {
+    display: block;
+    color: #333333;
+    text-decoration: none;
+    padding: 15px;
+    margin-bottom: 8px;
+    border-radius: 6px;
+}
+
+.menu-lateral a:hover {
+    background-color: #fce4ec;
+    color: #e91e63;
+}
+
+.menu-lateral .activo {
+    background-color: #fce4ec;
+    color: #e91e63;
+    font-weight: bold;
+}
+
+.cerrar-sesion {
+    margin-top: 50px;
+}
+
+/* CONTENIDO PRINCIPAL */
+
+.contenido-principal {
+    flex: 1;
+    min-width: 0;
+    padding: 30px;
+}
+
+/* ENCABEZADO */
+
+.encabezado {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #dddddd;
+    margin-bottom: 30px;
+}
+
+.encabezado p {
+    color: #555555;
+}
+
+.usuario {
+    background-color: #f2f3f7;
+    padding: 10px;
+    border-radius: 6px;
+}
+
+/* TÍTULOS */
+
+.contenido-principal h1 {
+    color: #222222;
+    font-size: 28px;
+    margin-bottom: 5px;
+}
+
+.contenido-principal > p {
+    color: #777777;
+}
+
+/* TARJETAS */
+
+.tarjetas {
+    display: flex;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.tarjeta {
+    flex: 1;
+    min-width: 0;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.tarjeta h3 {
+    font-size: 14px;
+    font-weight: normal;
+}
+
+.tarjeta h2 {
+    font-size: 26px;
+    margin-bottom: 0;
+}
+
+.productos {
+    background-color: #e2f5ed;
+}
+
+.ventas {
+    background-color: #fce4ec;
+}
+
+.facturas {
+    background-color: #e3ecff;
+}
+
+.stock {
+    background-color: #fff1dc;
+}
+
+/* RESUMEN INFERIOR */
+
+.resumen {
+    display: flex;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.cuadro-resumen {
+    flex: 1;
+    min-width: 0;
+    padding: 20px;
+    border: 1px solid #dddddd;
+    border-radius: 10px;
+}
+
+.cuadro-resumen h2 {
+    font-size: 20px;
+    color: #222222;
+}
+
+/* GRÁFICO DE VENTAS */
+
+.grafico {
+    height: 180px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-around;
+}
+
+.dia {
+    text-align: center;
+}
+
+.barra {
+    width: 30px;
+    background-color: #ed90b4;
+}
+
+.dia p {
+    font-size: 13px;
+    color: #555555;
+}
+
+/* PRODUCTOS CON POCO STOCK */
+
+.fila-stock {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #eeeeee;
+}
+
+.fila-stock p {
+    font-size: 14px;
+}
+
+.fila-stock p:last-child {
+    color: #d65370;
+}
+
+/* DISEÑO PARA TABLETAS */
+
+@media (max-width: 1000px) {
+
+    .tarjetas {
+        flex-wrap: wrap;
+    }
+
+    .tarjeta {
+        flex: 1 1 35%;
+    }
+
+    .resumen {
+        display: block;
+    }
+
+    .cuadro-resumen {
+        margin-bottom: 20px;
+    }
+
+}
+
+/* DISEÑO PARA CELULARES */
+
+@media (max-width: 600px) {
+
+    .panel-principal {
+        display: block;
+    }
+
+    .menu-lateral {
+        width: auto;
+        border-right: none;
+        border-bottom: 1px solid #dddddd;
+    }
+
+    .menu-lateral h2 {
+        margin-bottom: 20px;
+    }
+
+    .menu-lateral a {
+        padding: 10px;
+    }
+
+    .contenido-principal {
+        padding: 15px;
+    }
+
+    .encabezado {
+        display: block;
+    }
+
+    .tarjetas {
+        display: block;
+    }
+
+    .tarjeta {
+        margin-bottom: 15px;
+    }
+
+    .resumen {
+        display: block;
+    }
+
+    .cuadro-resumen {
+        margin-bottom: 20px;
+        padding: 15px;
+    }
+
+    .barra {
+        width: 20px;
+    }
+
+}
