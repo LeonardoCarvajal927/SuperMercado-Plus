@@ -275,3 +275,30 @@ tr:nth-child(even) {
     }
 
 }
+
+
+/* BOTON DE REPORTES */
+
+#boton-reportes {
+    background-color: #347bd7;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 5px;
+    margin-top: 25px;
+    cursor: pointer;
+}
+
+#boton-reportes:hover {
+    background-color: #245eab;
+}
+
+/* AJUSTE PARA CELULARES */
+
+@media (max-width: 900px) {
+
+    .tablas-reportes {
+        display: block;
+    }
+
+}
