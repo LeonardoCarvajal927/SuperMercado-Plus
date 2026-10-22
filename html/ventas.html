@@ -21,21 +21,23 @@
 
             <h2>SuperMercado <span>PLUS</span></h2>
 
-            <a href="inicio.html">Inicio</a>
+            <a href="inicio.html" target="inicio">
+                Inicio
+            </a>
 
-            <a href="inventario.html" target="_blank">
+            <a href="inventario.html" target="inventario">
                 Inventario
             </a>
 
-            <a href="ventas.html" class="activo">
+            <a href="ventas.html" target="ventas" class="activo">
                 Ventas
             </a>
 
-            <a href="facturacion.html" target="_blank">
+            <a href="facturacion.html" target="facturacion">
                 Facturación
             </a>
 
-            <a href="reportes.html" target="_blank">
+            <a href="reportes.html" target="reportes">
                 Reportes
             </a>
 
@@ -75,8 +77,11 @@
                             Nombre del cliente
                         </label>
 
-                        <input type="text" id="cliente"
-                        placeholder="Ej. Carlos Perez">
+                        <input
+                            type="text"
+                            id="cliente"
+                            placeholder="Ej. Carlos Perez"
+                        >
 
                     </div>
 
@@ -132,25 +137,7 @@
                                 Seleccionar producto
                             </option>
 
-                            <option value="4500">
-                                Arroz 1 kg - $4.500
-                            </option>
-
-                            <option value="5200">
-                                Leche 1 L - $5.200
-                            </option>
-
-                            <option value="9000">
-                                Aceite 1 L - $9.000
-                            </option>
-
-                            <option value="4200">
-                                Azucar 1 kg - $4.200
-                            </option>
-
-                            <option value="7500">
-                                Pan tajado - $7.500
-                            </option>
+                            <!-- JAVASCRIPT CARGARA LOS PRODUCTOS DEL INVENTARIO -->
 
                         </select>
 
@@ -162,8 +149,13 @@
                             Cantidad
                         </label>
 
-                        <input type="number" id="cantidad"
-                        min="1" value="1">
+                        <input
+                            type="number"
+                            id="cantidad"
+                            min="1"
+                            step="1"
+                            value="1"
+                        >
 
                     </div>
 
@@ -201,31 +193,7 @@
 
                         <tbody id="tabla-venta">
 
-                            <tr>
-                                <td>Arroz 1 kg</td>
-                                <td>$ 4.500</td>
-                                <td>2</td>
-                                <td>$ 9.000</td>
-                                <td>
-                                    <button type="button"
-                                    class="boton-quitar">
-                                        Quitar
-                                    </button>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>Leche 1 L</td>
-                                <td>$ 5.200</td>
-                                <td>1</td>
-                                <td>$ 5.200</td>
-                                <td>
-                                    <button type="button"
-                                    class="boton-quitar">
-                                        Quitar
-                                    </button>
-                                </td>
-                            </tr>
+                            <!-- JAVASCRIPT AGREGARA LAS FILAS DE LA VENTA -->
 
                         </tbody>
 
@@ -239,7 +207,7 @@
 
                     <h2>Total de la venta</h2>
 
-                    <h2 id="total">$ 14.200</h2>
+                    <h2 id="total">$ 0</h2>
 
                 </div>
 
@@ -263,6 +231,11 @@
 
     </div>
 
+    <!-- ARCHIVOS DE ALMACENAMIENTO Y PRODUCTOS -->
+
+    <script src="../js/productos-storage.js"></script>
+    <script src="../js/productos-datos.js"></script>
+    <script src="../js/ventas-storage.js"></script>
     <script src="../js/ventas.js"></script>
 
 </body>

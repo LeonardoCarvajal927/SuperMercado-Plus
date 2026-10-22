@@ -1,85 +1,141 @@
 
-/* INVENTARIO - SUPERMERCADO PLUS */
 
-/* BUSCAR PRODUCTOS */
+const buscador = document.getElementById("buscar");
 
-var buscador = document.getElementById("buscar");
+const tablaProductos = document.getElementById("tabla-productos");
 
-buscador.addEventListener("input", function() {
+const ventanaEliminar = document.getElementById("ventana-eliminar");
 
-    var texto = buscador.value.toLowerCase();
+const textoEliminar = document.getElementById("texto-eliminar");
 
-    var filas = document.querySelectorAll("tbody tr");
+const botonCancelar = document.getElementById("cancelar-eliminar");
 
-    for (var i = 0; i < filas.length; i++) {
+const botonConfirmar = document.getElementById("confirmar-eliminar");
 
-        var codigo = filas[i].cells[0].textContent.toLowerCase();
 
-        var nombre = filas[i].cells[1].textContent.toLowerCase();
+/* CODIGO DEL PRODUCTO QUE SE QUIERE ELIMINAR */
 
-        if (codigo.includes(texto) || nombre.includes(texto)) {
+let codigoSeleccionado = "";
 
-            filas[i].style.display = "";
 
-        } else {
+/* CARGAR LOS PRODUCTOS DEL INVENTARIO */
 
-            filas[i].style.display = "none";
+function cargarInventario() {
+
+    const productos = obtenerProductos();
+
+    mostrarProductos(productos);
+
+}
+
+
+/* BUSCAR PRODUCTOS MIENTRAS SE ESCRIBE */
+
+function buscarProductos() {
+
+    const texto = buscador.value.toLowerCase().trim();
+
+    const productos = obtenerProductos();
+
+    const resultados = [];
+
+    for (let i = 0; i < productos.length; i++) {
+
+        const nombre = productos[i].nombre.toLowerCase();
+
+        const codigo = productos[i].codigo.toLowerCase();
+
+        if (nombre.includes(texto) || codigo.includes(texto)) {
+
+            resultados.push(productos[i]);
 
         }
+
+    }
+
+    mostrarProductos(resultados);
+
+}
+
+
+/* ABRIR VENTANA PARA ELIMINAR */
+
+function abrirVentanaEliminar(codigo) {
+
+    const producto = buscarProductoPorCodigo(codigo);
+
+    if (producto === null) {
+        return;
+    }
+
+    codigoSeleccionado = codigo;
+
+    textoEliminar.textContent =
+        "¿Estás seguro de eliminar " + producto.nombre + "?";
+
+    ventanaEliminar.style.display = "flex";
+
+}
+
+
+/* CERRAR VENTANA PARA ELIMINAR */
+
+function cerrarVentanaEliminar() {
+
+    ventanaEliminar.style.display = "none";
+
+    codigoSeleccionado = "";
+
+}
+
+
+/* CONFIRMAR ELIMINACION */
+
+function confirmarEliminacion() {
+
+    if (codigoSeleccionado === "") {
+        return;
+    }
+
+    eliminarProducto(codigoSeleccionado);
+
+    cerrarVentanaEliminar();
+
+    buscarProductos();
+
+}
+
+
+/* DETECTAR EL BUSCADOR */
+
+buscador.addEventListener("input", buscarProductos);
+
+
+/* DETECTAR LOS BOTONES ELIMINAR */
+
+tablaProductos.addEventListener("click", function(evento) {
+
+    if (evento.target.classList.contains("boton-eliminar")) {
+
+        const codigo = evento.target.dataset.codigo;
+
+        abrirVentanaEliminar(codigo);
 
     }
 
 });
 
 
-/* ELIMINAR PRODUCTOS */
+/* BOTON CANCELAR */
 
-var botonesEliminar = document.querySelectorAll(".boton-eliminar");
-
-var ventana = document.getElementById("ventana-eliminar");
-
-var cancelar = document.getElementById("cancelar-eliminar");
-
-var confirmar = document.getElementById("confirmar-eliminar");
-
-var filaSeleccionada;
+botonCancelar.addEventListener("click", cerrarVentanaEliminar);
 
 
-/* ABRIR LA VENTANA */
+/* BOTON CONFIRMAR */
 
-for (var i = 0; i < botonesEliminar.length; i++) {
-
-    botonesEliminar[i].addEventListener("click", function() {
-
-        filaSeleccionada = this.parentElement.parentElement;
-
-        var nombreProducto = filaSeleccionada.cells[1].textContent;
-
-        document.getElementById("texto-eliminar").textContent =
-            "¿Estás seguro de eliminar " + nombreProducto + "?";
-
-        ventana.style.display = "flex";
-
-    });
-
-}
+botonConfirmar.addEventListener("click", confirmarEliminacion);
 
 
-/* CANCELAR ELIMINACION */
+/* MOSTRAR LOS PRODUCTOS AL ABRIR LA PAGINA */
 
-cancelar.addEventListener("click", function() {
-
-    ventana.style.display = "none";
-
-});
-
-
-/* CONFIRMAR ELIMINACION */
-
-confirmar.addEventListener("click", function() {
-
-    filaSeleccionada.remove();
-
-    ventana.style.display = "none";
-
-});
+cargarInventario();

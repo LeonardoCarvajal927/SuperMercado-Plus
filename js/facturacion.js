@@ -1,128 +1,236 @@
 
-/* FACTURACION - SUPERMERCADO PLUS */
 
-/* BUSCAR FACTURAS */
+const buscadorFactura = document.getElementById("buscar");
 
-var botonBuscar = document.getElementById("boton-buscar");
+const botonBuscar = document.getElementById("boton-buscar");
 
-botonBuscar.addEventListener("click", function() {
+const tablaFacturas = document.getElementById("tabla-facturas");
 
-    var buscar = document.getElementById("buscar").value;
+const detalleFactura = document.getElementById("detalle-factura");
 
-    buscar = buscar.toLowerCase();
+const productosFactura = document.getElementById("productos-factura");
 
-    var filas = document.querySelectorAll(
-        ".contenedor-tabla tbody tr"
-    );
+const botonCerrar = document.getElementById("cerrar-detalle");
 
-    for (var i = 0; i < filas.length; i++) {
 
-        var numero = filas[i].cells[0].textContent;
+/* DAR FORMATO A LOS PRECIOS */
 
-        numero = numero.toLowerCase();
+function formatoPrecio(valor) {
 
-        if (numero.includes(buscar)) {
+    return "$ " + Number(valor).toLocaleString("es-CO");
 
-            filas[i].style.display = "";
+}
 
-        } else {
 
-            filas[i].style.display = "none";
+/* CREAR UNA CELDA DE TABLA */
+
+function crearCeldaFactura(fila, texto) {
+
+    const celda = document.createElement("td");
+
+    celda.textContent = texto;
+
+    fila.appendChild(celda);
+
+}
+
+
+/* MOSTRAR LAS VENTAS GUARDADAS */
+
+function mostrarFacturas(ventas) {
+
+    tablaFacturas.innerHTML = "";
+
+    for (let i = 0; i < ventas.length; i++) {
+
+        const venta = ventas[i];
+
+        const fila = document.createElement("tr");
+
+        crearCeldaFactura(fila, venta.numero);
+
+        crearCeldaFactura(fila, venta.fecha);
+
+        crearCeldaFactura(fila, venta.cliente);
+
+        crearCeldaFactura(fila, formatoPrecio(venta.total));
+
+        /* CREAR BOTON VER DETALLE */
+
+        const celdaAcciones = document.createElement("td");
+
+        const botonDetalle = document.createElement("button");
+
+        botonDetalle.type = "button";
+
+        botonDetalle.textContent = "Ver detalle";
+
+        botonDetalle.className = "boton-detalle";
+
+        botonDetalle.dataset.numero = venta.numero;
+
+        celdaAcciones.appendChild(botonDetalle);
+
+        fila.appendChild(celdaAcciones);
+
+        tablaFacturas.appendChild(fila);
+
+    }
+
+}
+
+
+/* BUSCAR VENTAS */
+
+function buscarFacturas() {
+
+    const texto = buscadorFactura.value.toLowerCase().trim();
+
+    const ventas = obtenerVentas();
+
+    const resultados = [];
+
+    for (let i = 0; i < ventas.length; i++) {
+
+        const numero = ventas[i].numero.toLowerCase();
+
+        const cliente = ventas[i].cliente.toLowerCase();
+
+        if (numero.includes(texto) || cliente.includes(texto)) {
+
+            resultados.push(ventas[i]);
 
         }
 
     }
 
-});
+    mostrarFacturas(resultados);
+
+    /* OCULTAR EL DETALLE ANTERIOR */
+
+    detalleFactura.style.display = "none";
+
+}
 
 
-/* VER DETALLE DE FACTURA */
+/* BUSCAR UNA VENTA POR SU NUMERO */
 
-var botonesDetalle = document.querySelectorAll(".boton-detalle");
+function buscarVentaPorNumero(numero) {
 
-for (var i = 0; i < botonesDetalle.length; i++) {
+    const ventas = obtenerVentas();
 
-    botonesDetalle[i].addEventListener("click", function() {
+    for (let i = 0; i < ventas.length; i++) {
 
-        var numero = this.getAttribute("data-factura");
+        if (ventas[i].numero === numero) {
 
-        var cliente = "";
-        var fecha = "";
-        var total = "";
-
-        /* IDENTIFICAR LA FACTURA */
-
-        if (numero == "F001") {
-
-            cliente = "Carlos Pérez";
-            fecha = "15/10/2026";
-            total = "$ 45.500";
-
-        } else if (numero == "F002") {
-
-            cliente = "María López";
-            fecha = "15/10/2026";
-            total = "$ 78.200";
-
-        } else if (numero == "F003") {
-
-            cliente = "Juan Gómez";
-            fecha = "14/10/2026";
-            total = "$ 32.000";
-
-        } else if (numero == "F004") {
-
-            cliente = "Ana Rodríguez";
-            fecha = "14/10/2026";
-            total = "$ 56.000";
+            return ventas[i];
 
         }
 
-        /* MOSTRAR LOS DATOS */
+    }
 
-        document.getElementById("numero-factura").textContent =
-            "Factura: " + numero;
+    return null;
 
-        document.getElementById("cliente-factura").textContent =
-            "Cliente: " + cliente;
+}
 
-        document.getElementById("fecha-factura").textContent =
-            "Fecha: " + fecha;
 
-        document.getElementById("total-factura").textContent =
-            "Total: " + total;
+/* MOSTRAR LOS PRODUCTOS DE UNA VENTA */
 
-        /* OCULTAR PRODUCTOS DE EJEMPLO DE OTRAS FACTURAS */
+function mostrarProductosFactura(productos) {
 
-        var productos = document.getElementById("productos-factura");
+    productosFactura.innerHTML = "";
 
-        if (numero == "F001") {
+    for (let i = 0; i < productos.length; i++) {
 
-            productos.style.display = "";
+        const producto = productos[i];
 
-        } else {
+        const fila = document.createElement("tr");
 
-            productos.style.display = "none";
+        crearCeldaFactura(fila, producto.nombre);
 
-        }
+        crearCeldaFactura(fila, producto.cantidad);
 
-        /* ABRIR DETALLE */
+        crearCeldaFactura(fila, formatoPrecio(producto.precio));
 
-        document.getElementById("detalle-factura").style.display =
-            "block";
+        const subtotal = producto.precio * producto.cantidad;
 
-    });
+        crearCeldaFactura(fila, formatoPrecio(subtotal));
+
+        productosFactura.appendChild(fila);
+
+    }
+
+}
+
+
+/* ABRIR DETALLE DE UNA VENTA */
+
+function abrirDetalleFactura(numero) {
+
+    const venta = buscarVentaPorNumero(numero);
+
+    if (venta === null) {
+        return;
+    }
+
+    document.getElementById("numero-factura").textContent =
+        "Factura: " + venta.numero;
+
+    document.getElementById("cliente-factura").textContent =
+        "Cliente: " + venta.cliente;
+
+    document.getElementById("fecha-factura").textContent =
+        "Fecha: " + venta.fecha;
+
+    document.getElementById("total-factura").textContent =
+        "Total: " + formatoPrecio(venta.total);
+
+    mostrarProductosFactura(venta.productos);
+
+    detalleFactura.style.display = "block";
 
 }
 
 
 /* CERRAR DETALLE */
 
-var botonCerrar = document.getElementById("cerrar-detalle");
+function cerrarDetalleFactura() {
 
-botonCerrar.addEventListener("click", function() {
+    detalleFactura.style.display = "none";
 
-    document.getElementById("detalle-factura").style.display =
-        "none";
+}
+
+
+/* DETECTAR LA ESCRITURA EN EL BUSCADOR */
+
+buscadorFactura.addEventListener("input", buscarFacturas);
+
+
+/* DETECTAR EL BOTON BUSCAR */
+
+botonBuscar.addEventListener("click", buscarFacturas);
+
+
+/* DETECTAR EL BOTON VER DETALLE */
+
+tablaFacturas.addEventListener("click", function(evento) {
+
+    if (evento.target.classList.contains("boton-detalle")) {
+
+        const numero = evento.target.dataset.numero;
+
+        abrirDetalleFactura(numero);
+
+    }
 
 });
+
+
+/* DETECTAR EL BOTON CERRAR */
+
+botonCerrar.addEventListener("click", cerrarDetalleFactura);
+
+
+/* CARGAR LAS VENTAS AL ABRIR FACTURACION */
+
+mostrarFacturas(obtenerVentas());

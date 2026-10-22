@@ -21,11 +21,17 @@
 
             <h2>SuperMercado <span>PLUS</span></h2>
 
-            <a href="inicio.html">Inicio</a>
-            <a href="inventario.html" target="_blank">Inventario</a>
-            <a href="ventas.html" target="_blank">Ventas</a>
-            <a href="facturacion.html" target="_blank">Facturación</a>
-            <a href="reportes.html" class="activo">Reportes</a>
+            <a href="inicio.html" target="inicio">Inicio</a>
+
+            <a href="inventario.html" target="inventario">Inventario</a>
+
+            <a href="ventas.html" target="ventas">Ventas</a>
+
+            <a href="facturacion.html" target="facturacion">Facturación</a>
+
+            <a href="reportes.html" target="reportes" class="activo">
+                Reportes
+            </a>
 
             <a href="login.html" class="cerrar-sesion">Cerrar sesión</a>
 
@@ -52,18 +58,27 @@
             <div class="tarjetas">
 
                 <div class="tarjeta tarjeta-ventas">
-                    <h3>VENTAS DEL DIA</h3>
-                    <h2>$ 850.000</h2>
+
+                    <h3>VENTAS DEL DÍA</h3>
+
+                    <h2 id="ventas-dia">$ 0</h2>
+
                 </div>
 
                 <div class="tarjeta tarjeta-facturas">
-                    <h3>FACTURAS</h3>
-                    <h2>18</h2>
+
+                    <h3>VENTAS REGISTRADAS</h3>
+
+                    <h2 id="cantidad-facturas">0</h2>
+
                 </div>
 
                 <div class="tarjeta tarjeta-productos">
+
                     <h3>PRODUCTOS VENDIDOS</h3>
-                    <h2>73</h2>
+
+                    <h2 id="productos-vendidos">0</h2>
+
                 </div>
 
             </div>
@@ -76,52 +91,19 @@
 
                 <p>Representación de las ventas de lunes a domingo.</p>
 
-                <div class="grafico">
+                <div class="grafico" id="grafico-ventas">
 
-                    <div class="dia">
-                        <div class="barra" style="height: 55px;"></div>
-                        <p>Lun</p>
-                    </div>
-
-                    <div class="dia">
-                        <div class="barra" style="height: 90px;"></div>
-                        <p>Mar</p>
-                    </div>
-
-                    <div class="dia">
-                        <div class="barra" style="height: 70px;"></div>
-                        <p>Mié</p>
-                    </div>
-
-                    <div class="dia">
-                        <div class="barra" style="height: 110px;"></div>
-                        <p>Jue</p>
-                    </div>
-
-                    <div class="dia">
-                        <div class="barra" style="height: 85px;"></div>
-                        <p>Vie</p>
-                    </div>
-
-                    <div class="dia">
-                        <div class="barra" style="height: 140px;"></div>
-                        <p>Sáb</p>
-                    </div>
-
-                    <div class="dia">
-                        <div class="barra" style="height: 115px;"></div>
-                        <p>Dom</p>
-                    </div>
+                    <!-- JAVASCRIPT CREARA LAS BARRAS -->
 
                 </div>
 
             </div>
 
             <!-- TABLAS DE REPORTES -->
-            
+
             <button type="button" id="boton-reportes">
                 Ocultar tablas
-            </button>    
+            </button>
 
             <div class="tablas-reportes">
 
@@ -142,27 +124,9 @@
                                 </tr>
                             </thead>
 
-                            <tbody>
+                            <tbody id="tabla-mas-vendidos">
 
-                                <tr>
-                                    <td>Arroz 1 kg</td>
-                                    <td>42</td>
-                                </tr>
-
-                                <tr>
-                                    <td>Leche 1 L</td>
-                                    <td>35</td>
-                                </tr>
-
-                                <tr>
-                                    <td>Aceite 1 L</td>
-                                    <td>27</td>
-                                </tr>
-
-                                <tr>
-                                    <td>Pan tajado</td>
-                                    <td>20</td>
-                                </tr>
+                                <!-- JAVASCRIPT CREARA LAS FILAS -->
 
                             </tbody>
 
@@ -189,27 +153,9 @@
                                 </tr>
                             </thead>
 
-                            <tbody>
+                            <tbody id="tabla-poco-stock">
 
-                                <tr>
-                                    <td>Azúcar 1 kg</td>
-                                    <td>2</td>
-                                </tr>
-
-                                <tr>
-                                    <td>Aceite 1 L</td>
-                                    <td>3</td>
-                                </tr>
-
-                                <tr>
-                                    <td>Arroz 1 kg</td>
-                                    <td>4</td>
-                                </tr>
-
-                                <tr>
-                                    <td>Leche 1 L</td>
-                                    <td>5</td>
-                                </tr>
+                                <!-- JAVASCRIPT CREARA LAS FILAS -->
 
                             </tbody>
 
@@ -222,14 +168,19 @@
             </div>
 
             <p class="nota">
-                Nota: los datos presentados son ejemplos para
-                el proyecto académico.
+                Los reportes se calculan a partir de los datos
+                guardados en el navegador.
             </p>
 
         </div>
 
     </div>
 
+    <!-- ARCHIVOS DE ALMACENAMIENTO -->
+
+    <script src="../js/productos-storage.js"></script>
+    <script src="../js/ventas-storage.js"></script>
+    <script src="../js/fechas.js"></script>
     <script src="../js/reportes.js"></script>
 
 </body>

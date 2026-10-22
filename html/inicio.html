@@ -13,19 +13,25 @@
 
     <div class="panel-principal">
 
-        <!-- MENÚ LATERAL -->
+        <!-- MENU LATERAL -->
 
         <div class="menu-lateral">
 
             <h2>SuperMercado <span>PLUS</span></h2>
 
-            <a href="inicio.html" class="activo">Inicio</a>
-            <a href="inventario.html" target="_blank">Inventario</a>
-            <a href="ventas.html" target="_blank">Ventas</a>
-            <a href="facturacion.html" target="_blank">Facturación</a>
-            <a href="reportes.html" target="_blank">Reportes</a>
+            <a href="inicio.html" target="inicio">Inicio</a>
 
-            <a href="login.html" class="cerrar-sesion">Cerrar sesión</a>
+            <a href="inventario.html" target="inventario">Inventario</a>
+
+            <a href="ventas.html" target="ventas">Ventas</a>
+
+            <a href="facturacion.html" target="facturacion">Facturación</a>
+
+            <a href="reportes.html" target="reportes">Reportes</a>
+
+            <a href="login.html" class="cerrar-sesion">
+                Cerrar sesión
+            </a>
 
         </div>
 
@@ -39,6 +45,7 @@
             </div>
 
             <h1>Bienvenido al supermercado</h1>
+
             <p>Resumen general de la actividad del negocio</p>
 
             <!-- TARJETAS -->
@@ -47,22 +54,22 @@
 
                 <div class="tarjeta productos">
                     <h3>PRODUCTOS</h3>
-                    <h2>125</h2>
+                    <h2 id="total-productos">0</h2>
                 </div>
 
                 <div class="tarjeta ventas">
                     <h3>VENTAS HOY</h3>
-                    <h2>$ 850.000</h2>
+                    <h2 id="ventas-hoy">$ 0</h2>
                 </div>
 
                 <div class="tarjeta facturas">
-                    <h3>FACTURAS</h3>
-                    <h2>18</h2>
+                    <h3>VENTAS REGISTRADAS</h3>
+                    <h2 id="total-facturas">0</h2>
                 </div>
 
                 <div class="tarjeta stock">
                     <h3>STOCK BAJO</h3>
-                    <h2>7</h2>
+                    <h2 id="stock-bajo">0</h2>
                 </div>
 
             </div>
@@ -71,73 +78,30 @@
 
             <div class="resumen">
 
+                <!-- VENTAS DE LA SEMANA -->
+
                 <div class="cuadro-resumen">
 
                     <h2>Ventas de la semana</h2>
 
-                    <div class="grafico">
+                    <div class="grafico" id="grafico-inicio">
 
-                        <div class="dia">
-                            <div class="barra" style="height: 55px;"></div>
-                            <p>L</p>
-                        </div>
-
-                        <div class="dia">
-                            <div class="barra" style="height: 90px;"></div>
-                            <p>M</p>
-                        </div>
-
-                        <div class="dia">
-                            <div class="barra" style="height: 70px;"></div>
-                            <p>M</p>
-                        </div>
-
-                        <div class="dia">
-                            <div class="barra" style="height: 105px;"></div>
-                            <p>J</p>
-                        </div>
-
-                        <div class="dia">
-                            <div class="barra" style="height: 80px;"></div>
-                            <p>V</p>
-                        </div>
-
-                        <div class="dia">
-                            <div class="barra" style="height: 135px;"></div>
-                            <p>S</p>
-                        </div>
-
-                        <div class="dia">
-                            <div class="barra" style="height: 115px;"></div>
-                            <p>D</p>
-                        </div>
+                        <!-- JAVASCRIPT CREARA LAS BARRAS -->
 
                     </div>
 
                 </div>
 
+                <!-- PRODUCTOS CON POCO STOCK -->
+
                 <div class="cuadro-resumen">
 
                     <h2>Productos con poco stock</h2>
 
-                    <div class="fila-stock">
-                        <p>Arroz 1 kg</p>
-                        <p>4 unidades</p>
-                    </div>
+                    <div id="lista-stock">
 
-                    <div class="fila-stock">
-                        <p>Aceite 1 L</p>
-                        <p>3 unidades</p>
-                    </div>
+                        <!-- JAVASCRIPT CREARA LAS FILAS -->
 
-                    <div class="fila-stock">
-                        <p>Azúcar 1 kg</p>
-                        <p>2 unidades</p>
-                    </div>
-
-                    <div class="fila-stock">
-                        <p>Leche 1 L</p>
-                        <p>5 unidades</p>
                     </div>
 
                 </div>
@@ -147,6 +111,13 @@
         </div>
 
     </div>
+
+    
+
+    <script src="../js/productos-storage.js"></script>
+    <script src="../js/ventas-storage.js"></script>
+    <script src="../js/fechas.js"></script>
+    <script src="../js/inicio.js"></script>
 
 </body>
 

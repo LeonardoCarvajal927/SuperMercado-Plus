@@ -50,8 +50,11 @@
 
                     <label for="buscar">Buscar productos</label>
 
-                    <input type="text" id="buscar"
-                    placeholder="Escribe el nombre o codigo...">
+                    <input
+                        type="text"
+                        id="buscar"
+                        placeholder="Escribe el nombre o codigo..."
+                    >
 
                 </div>
 
@@ -65,7 +68,7 @@
 
             <div class="contenedor-tabla">
 
-                <table>
+                <table id="tabla-productos">
 
                     <thead>
                         <tr>
@@ -80,65 +83,7 @@
 
                     <tbody>
 
-                        <tr>
-                            <td>P001</td>
-                            <td>Arroz 1 kg</td>
-                            <td>Granos</td>
-                            <td>$ 4.500</td>
-                            <td>25</td>
-                            <td>
-                                <a href="editar.html" class="boton-editar">Editar</a>
-                                <button class="boton-eliminar">Eliminar</button>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>P002</td>
-                            <td>Leche 1 L</td>
-                            <td>Lacteos</td>
-                            <td>$ 5.200</td>
-                            <td>30</td>
-                            <td>
-                                <a href="editar.html" class="boton-editar">Editar</a>
-                                <button class="boton-eliminar">Eliminar</button>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>P003</td>
-                            <td>Aceite 1 L</td>
-                            <td>Abarrotes</td>
-                            <td>$ 9.000</td>
-                            <td>13</td>
-                            <td>
-                                <a href="editar.html" class="boton-editar">Editar</a>
-                                <button class="boton-eliminar">Eliminar</button>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>P004</td>
-                            <td>Azucar 1 kg</td>
-                            <td>Granos</td>
-                            <td>$ 4.200</td>
-                            <td>18</td>
-                            <td>
-                                <a href="editar.html" class="boton-editar">Editar</a>
-                                <button class="boton-eliminar">Eliminar</button>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>P005</td>
-                            <td>Pan tajado</td>
-                            <td>Panaderia</td>
-                            <td>$ 7.500</td>
-                            <td>12</td>
-                            <td>
-                                <a href="editar.html" class="boton-editar">Editar</a>
-                                <button class="boton-eliminar">Eliminar</button>
-                            </td>
-                        </tr>
+                        <!-- LOS PRODUCTOS SE MOSTRARAN CON JAVASCRIPT -->
 
                     </tbody>
 
@@ -150,37 +95,47 @@
 
     </div>
 
-    
 
+    <!-- VENTANA PARA CONFIRMAR ELIMINACION -->
 
-<div id="ventana-eliminar" class="fondo-ventana">
+    <div id="ventana-eliminar" class="fondo-ventana">
 
-    <div class="cuadro-eliminar">
+        <div class="cuadro-eliminar">
 
-        <h2>¿Eliminar producto?</h2>
+            <h2>¿Eliminar producto?</h2>
 
-        <p id="texto-eliminar">
-            ¿Estás seguro de eliminar este producto?
-        </p>
+            <p id="texto-eliminar">
+                ¿Estás seguro de eliminar este producto?
+            </p>
 
-        <p>Esta acción no se puede deshacer.</p>
+            <p>Esta acción no se puede deshacer.</p>
 
-        <div class="botones-confirmacion">
+            <div class="botones-confirmacion">
 
-            <button type="button" id="cancelar-eliminar">
-                Cancelar
-            </button>
+                <button type="button" id="cancelar-eliminar">
+                    Cancelar
+                </button>
 
-            <button type="button" id="confirmar-eliminar">
-                Sí, eliminar
-            </button>
+                <button type="button" id="confirmar-eliminar">
+                    Sí, eliminar
+                </button>
+
+            </div>
 
         </div>
 
     </div>
 
-</div>
 
+    <!-- ARCHIVOS JAVASCRIPT DEL ENTREGABLE 3 -->
+
+    <script src="../js/productos-storage.js"></script>
+
+    <script src="../js/productos-datos.js"></script>
+
+    <script src="../js/productos-dom.js"></script>
+
+    <!-- FUNCIONES DEL INVENTARIO -->
 
     <script src="../js/inventario.js"></script>
 

@@ -1,69 +1,171 @@
 
-/* FORMULARIO DE EDITAR PRODUCTO */
+/* EDITAR PRODUCTOS - ENTREGABLE 3 */
 
-var formulario = document.getElementById("formulario-editar");
+/* OBTENER EL FORMULARIO */
 
-formulario.addEventListener("submit", function(evento) {
+const formularioEditar = document.getElementById("formulario-editar");
+
+/* OBTENER EL CODIGO DESDE LA DIRECCION */
+
+const parametros = new URLSearchParams(window.location.search);
+
+let codigoOriginal = parametros.get("codigo");
+
+
+/* MOSTRAR UN MENSAJE */
+
+function mostrarMensaje(texto) {
+
+    document.getElementById("mensaje-exito").textContent = texto;
+
+}
+
+
+/* CARGAR LOS DATOS DEL PRODUCTO */
+
+function cargarProducto() {
+
+    if (codigoOriginal === null) {
+
+        mostrarMensaje("No se seleccionó ningún producto.");
+        return;
+
+    }
+
+    const producto = buscarProductoPorCodigo(codigoOriginal);
+
+    if (producto === null) {
+
+        mostrarMensaje("No se encontró el producto.");
+        return;
+
+    }
+
+    document.getElementById("nombre").value = producto.nombre;
+    document.getElementById("codigo").value = producto.codigo;
+    document.getElementById("categoria").value = producto.categoria;
+    document.getElementById("precio").value = producto.precio;
+    document.getElementById("cantidad").value = producto.cantidad;
+    document.getElementById("fecha").value = producto.fecha || "";
+    document.getElementById("proveedor").value = producto.proveedor;
+
+}
+
+
+/* LEER LOS DATOS DEL FORMULARIO */
+
+function leerFormularioEdicion() {
+
+    const precioTexto = document.getElementById("precio").value;
+    const cantidadTexto = document.getElementById("cantidad").value;
+
+    const producto = {
+
+        nombre: document.getElementById("nombre").value.trim(),
+
+        codigo: document.getElementById("codigo").value.trim(),
+
+        categoria: document.getElementById("categoria").value,
+
+        precio: Number(precioTexto),
+
+        cantidad: Number(cantidadTexto),
+
+        fecha: document.getElementById("fecha").value,
+
+        proveedor: document.getElementById("proveedor").value
+
+    };
+
+    return {
+        producto: producto,
+        precioTexto: precioTexto,
+        cantidadTexto: cantidadTexto
+    };
+
+}
+
+
+/* VALIDAR Y GUARDAR LOS CAMBIOS */
+
+function guardarEdicion(evento) {
 
     evento.preventDefault();
 
-    /* OBTENER LOS DATOS */
+    mostrarMensaje("");
 
-    var nombre = document.getElementById("nombre").value;
-    var codigo = document.getElementById("codigo").value;
-    var categoria = document.getElementById("categoria").value;
-    var precio = document.getElementById("precio").value;
-    var cantidad = document.getElementById("cantidad").value;
-    var proveedor = document.getElementById("proveedor").value;
+    /* COMPROBAR QUE EL PRODUCTO EXISTA */
 
-    /* LIMPIAR LOS MENSAJES ANTERIORES */
+    if (codigoOriginal === null ||
+        buscarProductoPorCodigo(codigoOriginal) === null) {
 
-    document.getElementById("error-nombre").textContent = "";
-    document.getElementById("error-codigo").textContent = "";
-    document.getElementById("error-categoria").textContent = "";
-    document.getElementById("error-precio").textContent = "";
-    document.getElementById("error-cantidad").textContent = "";
-    document.getElementById("error-proveedor").textContent = "";
-    document.getElementById("mensaje-exito").textContent = "";
+        mostrarMensaje("No se puede actualizar este producto.");
+        return;
 
-    /* COMPROBAR LOS CAMPOS */
-
-    var correcto = true;
-
-    if (nombre.trim() == "") {
-        document.getElementById("error-nombre").textContent = "El nombre es obligatorio.";
-        correcto = false;
     }
 
-    if (codigo.trim() == "") {
-        document.getElementById("error-codigo").textContent = "El código es obligatorio.";
-        correcto = false;
+    const datos = leerFormularioEdicion();
+
+    const producto = datos.producto;
+
+    /* VALIDAR LOS CAMPOS */
+
+    const errores = validarDatosProducto(
+        producto,
+        datos.precioTexto,
+        datos.cantidadTexto
+    );
+
+    /* COMPROBAR CODIGO DUPLICADO */
+
+    if (producto.codigo !== "" &&
+        codigoProductoDuplicado(producto.codigo, codigoOriginal)) {
+
+        errores.codigo = "Ya existe un producto con ese código.";
+
     }
 
-    if (categoria == "") {
-        document.getElementById("error-categoria").textContent = "Selecciona una categoría.";
-        correcto = false;
+    /* MOSTRAR ERRORES */
+
+    const hayErrores = mostrarErroresProducto(errores);
+
+    if (hayErrores === true) {
+        return;
     }
 
-    if (precio == "" || Number(precio) <= 0) {
-        document.getElementById("error-precio").textContent = "El precio debe ser mayor que cero.";
-        correcto = false;
+    /* ACTUALIZAR EL PRODUCTO */
+
+    const actualizado = actualizarProducto(codigoOriginal, producto);
+
+    if (actualizado === true) {
+
+        /* RECORDAR EL NUEVO CODIGO */
+
+        codigoOriginal = producto.codigo;
+
+        /* ACTUALIZAR LA DIRECCION SIN RECARGAR */
+
+        const nuevaDireccion = "editar.html?codigo=" +
+            encodeURIComponent(producto.codigo);
+
+        window.history.replaceState(null, "", nuevaDireccion);
+
+        mostrarMensaje("Producto actualizado correctamente.");
+
+    } else {
+
+        mostrarMensaje("No se pudo actualizar el producto.");
+
     }
 
-    if (cantidad == "" || Number(cantidad) < 0 || Number.isInteger(Number(cantidad)) == false) {
-        document.getElementById("error-cantidad").textContent = "Ingresa una cantidad entera igual o mayor que cero.";
-        correcto = false;
-    }
+}
 
-    if (proveedor == "") {
-        document.getElementById("error-proveedor").textContent = "Selecciona un proveedor.";
-        correcto = false;
-    }
 
-    /* MOSTRAR RESULTADO */
+/* DETECTAR EL ENVIO DEL FORMULARIO */
 
-    if (correcto == true) {
-        document.getElementById("mensaje-exito").textContent = "Producto actualizado correctamente (simulación).";
-    }
+formularioEditar.addEventListener("submit", guardarEdicion);
 
-});
+
+/* CARGAR EL PRODUCTO SELECCIONADO */
+
+cargarProducto();

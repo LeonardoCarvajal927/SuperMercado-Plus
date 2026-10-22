@@ -1,209 +1,610 @@
 
+const selectorProducto = document.getElementById("producto");
+const campoCantidad = document.getElementById("cantidad");
+
+const botonAgregar = document.getElementById("agregar-producto");
+const botonCancelar = document.getElementById("cancelar-venta");
+const botonRegistrar = document.getElementById("registrar-venta");
+
+const tablaVenta = document.getElementById("tabla-venta");
+const textoTotal = document.getElementById("total");
+
+const mensajeError = document.getElementById("error-producto");
+const mensajeVenta = document.getElementById("mensaje-venta");
 
 
-var producto = document.getElementById("producto");
-var cantidad = document.getElementById("cantidad");
-var cliente = document.getElementById("cliente");
-var metodoPago = document.getElementById("metodo-pago");
+/* PRODUCTOS QUE EL CLIENTE QUIERE COMPRAR */
 
-var botonAgregar = document.getElementById("agregar-producto");
-var botonCancelar = document.getElementById("cancelar-venta");
-var botonRegistrar = document.getElementById("registrar-venta");
-
-var tabla = document.getElementById("tabla-venta");
-var total = document.getElementById("total");
-
-var error = document.getElementById("error-producto");
-var mensaje = document.getElementById("mensaje-venta");
+let carrito = [];
 
 
-/* CALCULAR TOTAL DE LA VENTA */
+/* DAR FORMATO A LOS PRECIOS */
 
-function calcularTotal() {
+function mostrarPrecio(valor) {
 
-    var filas = tabla.rows;
-    var suma = 0;
-
-    for (var i = 0; i < filas.length; i++) {
-
-        var precioTexto = filas[i].cells[1].textContent;
-
-        precioTexto = precioTexto.replace("$", "");
-        precioTexto = precioTexto.replace(".", "");
-
-        var precio = Number(precioTexto);
-
-        var unidades = Number(filas[i].cells[2].textContent);
-
-        var subtotal = precio * unidades;
-
-        suma = suma + subtotal;
-
-    }
-
-    total.textContent = "$ " + suma.toLocaleString("es-CO");
+    return "$ " + Number(valor).toLocaleString("es-CO");
 
 }
 
 
-/* AGREGAR PRODUCTO */
+/* CARGAR PRODUCTOS DEL INVENTARIO */
 
-botonAgregar.addEventListener("click", function() {
+function cargarProductosVenta() {
 
-    error.textContent = "";
-    mensaje.textContent = "";
+    const productos = obtenerProductos();
 
-    var precio = Number(producto.value);
-    var unidades = Number(cantidad.value);
+    selectorProducto.innerHTML = "";
+
+    const opcionInicial = document.createElement("option");
+
+    opcionInicial.value = "";
+    opcionInicial.textContent = "Seleccionar producto";
+
+    selectorProducto.appendChild(opcionInicial);
+
+    for (let i = 0; i < productos.length; i++) {
+
+        const producto = productos[i];
+
+        if (producto.cantidad > 0) {
+
+            const opcion = document.createElement("option");
+
+            opcion.value = producto.codigo;
+
+            opcion.textContent =
+                producto.nombre + " - " +
+                mostrarPrecio(producto.precio) +
+                " (Stock: " + producto.cantidad + ")";
+
+            selectorProducto.appendChild(opcion);
+
+        }
+
+    }
+
+}
+
+
+/* BUSCAR UN PRODUCTO EN EL CARRITO */
+
+function buscarEnCarrito(codigo) {
+
+    for (let i = 0; i < carrito.length; i++) {
+
+        if (carrito[i].codigo === codigo) {
+
+            return carrito[i];
+
+        }
+
+    }
+
+    return null;
+
+}
+
+
+/* CALCULAR EL TOTAL DE LA VENTA */
+
+function calcularTotalVenta() {
+
+    let total = 0;
+
+    for (let i = 0; i < carrito.length; i++) {
+
+        total = total +
+            carrito[i].precio * carrito[i].cantidad;
+
+    }
+
+    textoTotal.textContent = mostrarPrecio(total);
+
+}
+
+
+/* CREAR UNA CELDA EN LA TABLA */
+
+function agregarCelda(fila, contenido) {
+
+    const celda = document.createElement("td");
+
+    celda.textContent = contenido;
+
+    fila.appendChild(celda);
+
+}
+
+
+/* MOSTRAR PRODUCTOS DEL CARRITO */
+
+function mostrarCarrito() {
+
+    tablaVenta.innerHTML = "";
+
+    for (let i = 0; i < carrito.length; i++) {
+
+        const producto = carrito[i];
+
+        const fila = document.createElement("tr");
+
+        agregarCelda(fila, producto.nombre);
+        agregarCelda(fila, mostrarPrecio(producto.precio));
+        agregarCelda(fila, producto.cantidad);
+
+        const subtotal = producto.precio * producto.cantidad;
+
+        agregarCelda(fila, mostrarPrecio(subtotal));
+
+        /* CREAR BOTON QUITAR */
+
+        const celdaAcciones = document.createElement("td");
+
+        const botonQuitar = document.createElement("button");
+
+        botonQuitar.type = "button";
+        botonQuitar.textContent = "Quitar";
+        botonQuitar.className = "boton-quitar";
+        botonQuitar.dataset.codigo = producto.codigo;
+
+        celdaAcciones.appendChild(botonQuitar);
+
+        fila.appendChild(celdaAcciones);
+
+        tablaVenta.appendChild(fila);
+
+    }
+
+    calcularTotalVenta();
+
+}
+
+
+/* AGREGAR UN PRODUCTO A LA VENTA */
+
+function agregarProductoVenta() {
+
+    mensajeError.textContent = "";
+    mensajeVenta.textContent = "";
+
+    const codigo = selectorProducto.value;
+    const cantidadTexto = campoCantidad.value;
+    const cantidad = Number(cantidadTexto);
 
     /* VALIDAR PRODUCTO */
 
-    if (producto.value == "") {
+    if (codigo === "") {
 
-        error.textContent = "Debes seleccionar un producto.";
+        mensajeError.textContent = "Selecciona un producto.";
         return;
 
     }
 
     /* VALIDAR CANTIDAD */
 
-    if (cantidad.value == "" ||
-        unidades <= 0 ||
-        Number.isInteger(unidades) == false) {
+    if (cantidadTexto === "" ||
+        !Number.isInteger(cantidad) ||
+        cantidad <= 0) {
 
-        error.textContent = "Ingresa una cantidad entera mayor que cero.";
+        mensajeError.textContent =
+            "La cantidad debe ser un número entero mayor que cero.";
+
         return;
 
     }
 
-    /* OBTENER EL NOMBRE DEL PRODUCTO */
+    /* BUSCAR PRODUCTO EN INVENTARIO */
 
-    var opcion = producto.options[producto.selectedIndex];
+    const producto = buscarProductoPorCodigo(codigo);
 
-    var nombre = opcion.textContent.split(" - ")[0];
+    if (producto === null) {
 
-    /* CALCULAR SUBTOTAL */
+        mensajeError.textContent =
+            "El producto no existe en Inventario.";
 
-    var subtotal = precio * unidades;
+        return;
 
-    /* CREAR UNA FILA */
+    }
 
-    var fila = tabla.insertRow();
+    /* COMPROBAR SI YA ESTA EN EL CARRITO */
 
-    /* CREAR LAS CELDAS */
+    const productoEnCarrito = buscarEnCarrito(codigo);
 
-    var celdaNombre = fila.insertCell(0);
-    var celdaPrecio = fila.insertCell(1);
-    var celdaCantidad = fila.insertCell(2);
-    var celdaSubtotal = fila.insertCell(3);
-    var celdaAcciones = fila.insertCell(4);
+    let cantidadAcumulada = cantidad;
 
-    /* COLOCAR LOS DATOS */
+    if (productoEnCarrito !== null) {
 
-    celdaNombre.textContent = nombre;
+        cantidadAcumulada =
+            productoEnCarrito.cantidad + cantidad;
 
-    celdaPrecio.textContent = "$ " + precio.toLocaleString("es-CO");
+    }
 
-    celdaCantidad.textContent = unidades;
+    /* VALIDAR EXISTENCIAS */
 
-    celdaSubtotal.textContent = "$ " + subtotal.toLocaleString("es-CO");
+    if (cantidadAcumulada > producto.cantidad) {
 
-    /* CREAR BOTON QUITAR */
+        mensajeError.textContent =
+            "No hay suficientes unidades. Stock disponible: " +
+            producto.cantidad;
 
-    var botonQuitar = document.createElement("button");
+        return;
 
-    botonQuitar.textContent = "Quitar";
-    botonQuitar.type = "button";
-    botonQuitar.className = "boton-quitar";
+    }
 
-    celdaAcciones.appendChild(botonQuitar);
+    /* VALIDAR CAMBIO DE PRECIO */
 
-    /* ACTUALIZAR TOTAL */
+    if (productoEnCarrito !== null &&
+        productoEnCarrito.precio !== producto.precio) {
 
-    calcularTotal();
+        mensajeError.textContent =
+            "El precio cambió. Quita el producto y vuelve a agregarlo.";
 
-    /* LIMPIAR CAMPOS */
+        return;
 
-    producto.value = "";
-    cantidad.value = 1;
+    }
 
-});
+    /* AGREGAR O AUMENTAR CANTIDAD */
+
+    if (productoEnCarrito === null) {
+
+        carrito.push({
+            codigo: producto.codigo,
+            nombre: producto.nombre,
+            precio: producto.precio,
+            cantidad: cantidad
+        });
+
+    } else {
+
+        productoEnCarrito.cantidad = cantidadAcumulada;
+
+    }
+
+    mostrarCarrito();
+
+    selectorProducto.value = "";
+    campoCantidad.value = 1;
+
+}
 
 
-/* QUITAR PRODUCTO */
+/* QUITAR UN PRODUCTO DEL CARRITO */
 
-tabla.addEventListener("click", function(evento) {
+function quitarProducto(codigo) {
+
+    const nuevoCarrito = [];
+
+    for (let i = 0; i < carrito.length; i++) {
+
+        if (carrito[i].codigo !== codigo) {
+
+            nuevoCarrito.push(carrito[i]);
+
+        }
+
+    }
+
+    carrito = nuevoCarrito;
+
+    mostrarCarrito();
+
+    mensajeError.textContent = "";
+    mensajeVenta.textContent = "";
+
+}
+
+
+/* CANCELAR LA VENTA */
+
+function cancelarVenta() {
+
+    carrito = [];
+
+    mostrarCarrito();
+
+    document.getElementById("cliente").value = "";
+    document.getElementById("metodo-pago").value = "";
+
+    selectorProducto.value = "";
+    campoCantidad.value = 1;
+
+    mensajeError.textContent = "";
+
+    cargarProductosVenta();
+
+    mensajeVenta.textContent =
+        "Venta cancelada. No se modificó el inventario.";
+
+}
+
+
+/* COMPROBAR PRODUCTOS ANTES DE VENDER */
+
+function validarExistencias() {
+
+    for (let i = 0; i < carrito.length; i++) {
+
+        const producto = buscarProductoPorCodigo(carrito[i].codigo);
+
+        /* COMPROBAR QUE EXISTA */
+
+        if (producto === null) {
+
+            mensajeError.textContent =
+                "Un producto fue eliminado del Inventario.";
+
+            return false;
+
+        }
+
+        /* COMPROBAR STOCK */
+
+        if (carrito[i].cantidad > producto.cantidad) {
+
+            mensajeError.textContent =
+                "Stock insuficiente para " + producto.nombre;
+
+            return false;
+
+        }
+
+        /* COMPROBAR PRECIO ACTUAL */
+
+        if (carrito[i].precio !== producto.precio) {
+
+            mensajeError.textContent =
+                "El precio de " + producto.nombre +
+                " cambió. Cancela la venta y vuelve a agregarlo.";
+
+            return false;
+
+        }
+
+    }
+
+    return true;
+
+}
+
+
+/* GUARDAR VENTA CON PROTECCION BASICA */
+
+function guardarVentaSegura(productos, ventas) {
+
+    /* CONSERVAR LOS DATOS ANTERIORES */
+
+    const productosAnteriores =
+        localStorage.getItem(CLAVE_PRODUCTOS);
+
+    const ventasAnteriores =
+        localStorage.getItem(CLAVE_VENTAS);
+
+    try {
+
+        guardarProductos(productos);
+        guardarVentas(ventas);
+
+        return true;
+
+    } catch (error) {
+
+        /* INTENTAR RECUPERAR LOS DATOS ANTERIORES */
+
+        try {
+
+            if (productosAnteriores === null) {
+
+                localStorage.removeItem(CLAVE_PRODUCTOS);
+
+            } else {
+
+                localStorage.setItem(
+                    CLAVE_PRODUCTOS,
+                    productosAnteriores
+                );
+
+            }
+
+            if (ventasAnteriores === null) {
+
+                localStorage.removeItem(CLAVE_VENTAS);
+
+            } else {
+
+                localStorage.setItem(
+                    CLAVE_VENTAS,
+                    ventasAnteriores
+                );
+
+            }
+
+            mensajeError.textContent =
+                "No se pudo guardar la venta. Inténtalo nuevamente.";
+
+        } catch (errorRecuperacion) {
+
+            mensajeError.textContent =
+                "No se pudo recuperar completamente la información. " +
+                "Revisa el Inventario y las ventas.";
+
+        }
+
+        return false;
+
+    }
+
+}
+
+
+/* REGISTRAR LA VENTA */
+
+function registrarVenta() {
+
+    mensajeError.textContent = "";
+    mensajeVenta.textContent = "";
+
+    /* COMPROBAR EL CARRITO */
+
+    if (carrito.length === 0) {
+
+        mensajeError.textContent =
+            "Debes agregar al menos un producto.";
+
+        return;
+
+    }
+
+    /* VALIDAR METODO DE PAGO */
+
+    const metodoPago =
+        document.getElementById("metodo-pago").value;
+
+    if (metodoPago === "") {
+
+        mensajeError.textContent =
+            "Selecciona un método de pago.";
+
+        return;
+
+    }
+
+    /* COMPROBAR EXISTENCIAS Y PRECIOS */
+
+    if (validarExistencias() === false) {
+
+        return;
+
+    }
+
+    /* RECUPERAR PRODUCTOS Y VENTAS */
+
+    const productos = obtenerProductos();
+    const ventas = obtenerVentas();
+
+    /* DESCONTAR EXISTENCIAS */
+
+    for (let i = 0; i < carrito.length; i++) {
+
+        for (let j = 0; j < productos.length; j++) {
+
+            if (productos[j].codigo === carrito[i].codigo) {
+
+                productos[j].cantidad =
+                    productos[j].cantidad - carrito[i].cantidad;
+
+            }
+
+        }
+
+    }
+
+    /* CALCULAR EL TOTAL */
+
+    let totalVenta = 0;
+
+    for (let i = 0; i < carrito.length; i++) {
+
+        totalVenta = totalVenta +
+            carrito[i].precio * carrito[i].cantidad;
+
+    }
+
+    /* CREAR EL REGISTRO */
+
+    const nuevaVenta = {
+
+        numero: "V" + Date.now(),
+
+        fecha: new Date().toLocaleString("es-CO"),
+
+        cliente:
+            document.getElementById("cliente").value.trim() ||
+            "Consumidor final",
+
+        metodoPago: metodoPago,
+
+        productos: carrito.map(function(producto) {
+
+            return {
+                codigo: producto.codigo,
+                nombre: producto.nombre,
+                precio: producto.precio,
+                cantidad: producto.cantidad
+            };
+
+        }),
+
+        total: totalVenta
+
+    };
+
+    ventas.push(nuevaVenta);
+
+    /* INTENTAR GUARDAR INVENTARIO Y VENTA */
+
+    const guardadoCorrecto = guardarVentaSegura(productos, ventas);
+
+    if (guardadoCorrecto === false) {
+
+        return;
+
+    }
+
+    /* LIMPIAR EL CARRITO DESPUES DE GUARDAR */
+
+    carrito = [];
+
+    mostrarCarrito();
+
+    document.getElementById("cliente").value = "";
+    document.getElementById("metodo-pago").value = "";
+
+    selectorProducto.value = "";
+    campoCantidad.value = 1;
+
+    cargarProductosVenta();
+
+    mensajeVenta.textContent =
+        "Venta registrada correctamente. Inventario actualizado.";
+
+}
+
+
+/* EVENTO DEL BOTON AGREGAR */
+
+botonAgregar.addEventListener("click", agregarProductoVenta);
+
+
+/* EVENTO DE LOS BOTONES QUITAR */
+
+tablaVenta.addEventListener("click", function(evento) {
 
     if (evento.target.classList.contains("boton-quitar")) {
 
-        var boton = evento.target;
+        const codigo = evento.target.dataset.codigo;
 
-        var celda = boton.parentElement;
-
-        var fila = celda.parentElement;
-
-        fila.remove();
-
-        calcularTotal();
-
-        mensaje.textContent = "";
+        quitarProducto(codigo);
 
     }
 
 });
 
 
-/* CANCELAR VENTA */
+/* EVENTO DEL BOTON CANCELAR */
 
-botonCancelar.addEventListener("click", function() {
-
-    tabla.innerHTML = "";
-
-    total.textContent = "$ 0";
-
-    cliente.value = "";
-    metodoPago.value = "";
-    producto.value = "";
-    cantidad.value = 1;
-
-    error.textContent = "";
-    mensaje.textContent = "Venta cancelada. No se guardaron datos.";
-
-});
+botonCancelar.addEventListener("click", cancelarVenta);
 
 
-/* REGISTRAR VENTA */
+/* EVENTO DEL BOTON REGISTRAR */
 
-botonRegistrar.addEventListener("click", function() {
-
-    error.textContent = "";
-    mensaje.textContent = "";
-
-    /* COMPROBAR PRODUCTOS */
-
-    if (tabla.rows.length == 0) {
-
-        error.textContent = "Agrega al menos un producto.";
-        return;
-
-    }
-
-    /* COMPROBAR METODO DE PAGO */
-
-    if (metodoPago.value == "") {
-
-        error.textContent = "Selecciona un método de pago.";
-        return;
-
-    }
-
-    /* MOSTRAR MENSAJE */
-
-    mensaje.textContent = "Venta registrada correctamente (simulación).";
-
-});
+botonRegistrar.addEventListener("click", registrarVenta);
 
 
-/* CALCULAR EL TOTAL INICIAL */
+/* CARGAR PRODUCTOS AL ABRIR VENTAS */
 
-calcularTotal();
+cargarProductosVenta();
+
+
+/* MOSTRAR EL CARRITO INICIAL */
+
+mostrarCarrito();
