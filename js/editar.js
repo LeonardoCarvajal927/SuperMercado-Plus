@@ -1,7 +1,4 @@
 
-/* EDITAR PRODUCTOS - ENTREGABLE 3 */
-
-/* OBTENER EL FORMULARIO */
 
 const formularioEditar = document.getElementById("formulario-editar");
 
