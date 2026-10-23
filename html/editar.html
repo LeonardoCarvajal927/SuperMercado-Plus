@@ -17,7 +17,6 @@
     <div class="panel-principal">
 
         <!-- MENU LATERAL -->
-
         <div class="menu-lateral">
 
             <h2>SuperMercado <span>PLUS</span></h2>
@@ -33,7 +32,6 @@
         </div>
 
         <!-- CONTENIDO PRINCIPAL -->
-
         <div class="contenido-principal">
 
             <div class="encabezado">
@@ -49,37 +47,33 @@
             <p>Modificar los datos registrados.</p>
 
             <!-- FORMULARIO -->
-
             <form id="formulario-editar" novalidate>
 
                 <div class="campos">
 
                     <!-- NOMBRE -->
-
                     <div class="campo">
 
                         <label for="nombre">Nombre del producto *</label>
 
-                        <input type="text" id="nombre" value="Arroz 1 kg">
+                        <input type="text" id="nombre">
 
                         <p class="error" id="error-nombre"></p>
 
                     </div>
 
                     <!-- CODIGO -->
-
                     <div class="campo">
 
                         <label for="codigo">Código *</label>
 
-                        <input type="text" id="codigo" value="P001">
+                        <input type="text" id="codigo">
 
                         <p class="error" id="error-codigo"></p>
 
                     </div>
 
                     <!-- CATEGORIA -->
-
                     <div class="campo">
 
                         <label for="categoria">Categoría *</label>
@@ -87,7 +81,7 @@
                         <select id="categoria">
 
                             <option value="">Seleccionar categoría</option>
-                            <option value="Granos" selected>Granos</option>
+                            <option value="Granos">Granos</option>
                             <option value="Lacteos">Lácteos</option>
                             <option value="Abarrotes">Abarrotes</option>
                             <option value="Panaderia">Panadería</option>
@@ -101,43 +95,41 @@
                     </div>
 
                     <!-- PRECIO -->
-
                     <div class="campo">
 
                         <label for="precio">Precio de venta *</label>
 
-                        <input type="number" id="precio" value="4500">
+                        <input type="number" id="precio"
+                            min="1" step="any">
 
                         <p class="error" id="error-precio"></p>
 
                     </div>
 
                     <!-- CANTIDAD -->
-
                     <div class="campo">
 
                         <label for="cantidad">Cantidad disponible *</label>
 
-                        <input type="number" id="cantidad" value="25">
+                        <input type="number" id="cantidad"
+                            min="0" step="1">
 
                         <p class="error" id="error-cantidad"></p>
 
                     </div>
 
                     <!-- FECHA -->
-
                     <div class="campo">
 
                         <label for="fecha">Fecha de vencimiento</label>
 
-                        <input type="date" id="fecha" value="2026-11-18">
+                        <input type="date" id="fecha">
 
                         <p class="error" id="error-fecha"></p>
 
                     </div>
 
                     <!-- PROVEEDOR -->
-
                     <div class="campo">
 
                         <label for="proveedor">Proveedor *</label>
@@ -145,15 +137,12 @@
                         <select id="proveedor">
 
                             <option value="">Seleccionar proveedor</option>
-
-                            <option value="Distribuidora Central" selected>
+                            <option value="Distribuidora Central">
                                 Distribuidora Central
                             </option>
-
                             <option value="Distribuidora Norte">
                                 Distribuidora Norte
                             </option>
-
                             <option value="Proveedor Local">
                                 Proveedor Local
                             </option>
@@ -164,10 +153,29 @@
 
                     </div>
 
+                    <!-- IMAGEN DEL PRODUCTO -->
+                    <div class="campo">
+
+                        <label for="imagen">Imagen del producto</label>
+
+                        <input type="file" id="imagen"
+                            accept="image/png,image/jpeg,image/webp">
+
+                        <p>Selecciona otra imagen si deseas cambiar la actual.</p>
+
+                        <img id="vista-previa"
+                            alt="Imagen actual del producto"
+                            style="display: none; width: 120px; height: 120px; object-fit: contain; margin-top: 10px; border: 1px solid #ddd; border-radius: 8px;">
+
+                        <p id="texto-sin-imagen">Sin imagen registrada.</p>
+
+                        <p class="error" id="error-imagen"></p>
+
+                    </div>
+
                 </div>
 
                 <!-- BOTONES -->
-
                 <div class="botones">
 
                     <a href="inventario.html" class="boton-cancelar">
