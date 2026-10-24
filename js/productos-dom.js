@@ -85,6 +85,28 @@ function mostrarProductos(productos) {
         // BOTON EDITAR
         const botonEditar = document.createElement("a");
 
+        const botonDetalles = document.createElement("button")
+
+        botonDetalles.textContent = "Detalles"
+        botonDetalles.type = "button";
+
+        botonDetalles.addEventListener("click", function(){
+
+            alert(
+
+                "Nombre: " + producto.nombre + "\n" +
+                "Código: " + producto.codigo + "\n" +
+                "Categoría: " + producto.categoria + "\n" +
+                "Precio: $" + producto.precio + "\n" +
+                "Cantidad: " + producto.cantidad + "\n" +
+                "Proveedor: " + producto.proveedor
+
+            )
+
+
+
+        })
+
         botonEditar.textContent = "Editar";
         botonEditar.href = "editar.html?codigo=" +
             encodeURIComponent(producto.codigo);
@@ -100,6 +122,7 @@ function mostrarProductos(productos) {
         botonEliminar.dataset.codigo = producto.codigo;
 
         // AGREGAR BOTONES
+        celdaAcciones.appendChild(botonDetalles);
         celdaAcciones.appendChild(botonEditar);
         celdaAcciones.appendChild(botonEliminar);
 
